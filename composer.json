@@ -1,0 +1,21 @@
+{
+    "name": "kpeamop/confirmer",
+    "type": "library",
+    "license": "MIT",
+    "description": "Custom confirmer",
+    "authors": [
+        {
+            "name": "CReator",
+            "email": "kpeamop@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Confirmer": "src"
+        }
+    },
+    "require": {
+        "php": "^7.3",
+        "psr/cache": "^1.0"
+    }
+}
