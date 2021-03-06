@@ -1,1 +1,6 @@
-# confirmer
+## Confirmer
+
+#### Installation:
+
+`$ make install`
+

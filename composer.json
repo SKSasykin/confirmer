@@ -11,11 +11,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "Confirmer": "src"
+            "Confirmer\\": "src"
         }
     },
     "require": {
-        "php": "^7.3",
-        "psr/cache": "^1.0"
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^3.15",
+        "phpunit/phpunit": "^9.5"
     }
 }

@@ -1,2 +1,5 @@
 /vendor/
 /.idea/
+/test_coverage_logs/
+/.phpunit.cache/
+*.lock
