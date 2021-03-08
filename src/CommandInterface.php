@@ -9,5 +9,5 @@ use Confirmer\Entity\Request;
 
 interface CommandInterface
 {
-    public function execute(Request $request, Message $message);
+    public function execute(Request $request, Message $message): void;
 }

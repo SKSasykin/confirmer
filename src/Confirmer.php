@@ -65,8 +65,12 @@ class Confirmer implements ConfirmerInterface
             $rule->onRequest($this->request);
         }
 
-        if (!$code) {
-            $code = new Code($code);
+        if ($code) {
+            $code   = new Code($code);
+            $status = $this->request->getStatus();
+            $this->request->setStatus(new Status($code, $status->isConfirmed(), $status->getRequestTime()));
+        } else {
+            $code = $this->request->getStatus()->getCode();
         }
 
         $this->message->setParam('code', (string) $code);

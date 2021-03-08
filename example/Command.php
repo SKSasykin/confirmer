@@ -8,7 +8,7 @@ use Confirmer\Entity\Request;
 
 class Command implements CommandInterface
 {
-    public function execute(Request $request, Message $message)
+    public function execute(Request $request, Message $message): void
     {
         echo "+ Run command for {$request->getRecipient()} \n";
     }
