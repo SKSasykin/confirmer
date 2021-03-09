@@ -8,35 +8,40 @@ use Confirmer\Entity\Request;
 use Confirmer\Exception\TriesLimitException;
 use DateTime;
 
-class DayLimit implements RuleInterface
+class DayLimit extends AbstractRule
 {
     /**
      * @var int
      */
     private $maxTries;
 
+    /**
+     * @var int
+     */
+    protected $tries;
+
     public function __construct(int $maxTries)
     {
         $this->maxTries = $maxTries;
     }
 
-    public function onRequest(Request $request): void
+    protected function onRequestCommand(Request $request): void
     {
-        if (empty($request->getStatus()->dayTries)) {
-            $request->getStatus()->dayTries = 0;
+        if (empty($this->tries)) {
+            $this->tries = 0;
         }
     }
 
-    public function onConfirm(Request $request): void
+    protected function onConfirmCommand(Request $request): void
     {
-        if ($request->getStatus()->dayTries >= $this->maxTries) {
+        if ($this->tries >= $this->maxTries) {
             throw new TriesLimitException();
         }
 
         if ($request->getStatus()->getRequestTime()->format('Y-m-d') == (new DateTime())->format('Y-m-d')) {
-            $request->getStatus()->dayTries++;
+            $this->tries++;
         } else {
-            $request->getStatus()->dayTries = 0;
+            $this->tries = 0;
         }
     }
 }

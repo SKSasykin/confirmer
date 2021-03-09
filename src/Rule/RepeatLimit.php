@@ -7,25 +7,33 @@ namespace Confirmer\Rule;
 use Confirmer\Entity\Request;
 use Confirmer\Exception\NotExpiredException;
 
-class RepeatLimit implements RuleInterface
+class RepeatLimit extends AbstractRule
 {
-    protected $repeatTimeout;
+    /**
+     * @var int
+     */
+    private $repeatTimeout;
+
+    /**
+     * @var int
+     */
+    protected $repeatTime;
 
     public function __construct(int $repeatTimeout)
     {
         $this->repeatTimeout = $repeatTimeout;
     }
 
-    public function onRequest(Request $request): void
+    public function onRequestCommand(Request $request): void
     {
-        if(isset($request->getStatus()->repeatTime) && $request->getStatus()->repeatTime > time()) {
+        if(isset($this->repeatTime) && $this->repeatTime > time()) {
             throw new NotExpiredException();
         }
 
-        $request->getStatus()->repeatTime = time() + $this->repeatTimeout;
+        $this->repeatTime = time() + $this->repeatTimeout;
     }
 
-    public function onConfirm(Request $request): void
+    public function onConfirmCommand(Request $request): void
     {
     }
 }

@@ -7,26 +7,31 @@ namespace Confirmer\Rule;
 use Confirmer\Entity\Request;
 use Confirmer\Exception\ExpiredException;
 
-class ExpireLimit implements RuleInterface
+class ExpireLimit extends AbstractRule
 {
     /**
      * @var int
      */
     private $expireTimeout;
 
+    /**
+     * @var int
+     */
+    protected $expire;
+
     public function __construct(int $expireTimeout)
     {
         $this->expireTimeout = $expireTimeout;
     }
 
-    public function onRequest(Request $request): void
+    protected function onRequestCommand(Request $request): void
     {
-        $request->getStatus()->expire = time() + $this->expireTimeout;
+        $this->expire = time() + $this->expireTimeout;
     }
 
-    public function onConfirm(Request $request): void
+    protected function onConfirmCommand(Request $request): void
     {
-        if($request->getStatus()->expire < time()) {
+        if($this->expire < time()) {
             throw new ExpiredException();
         }
     }
