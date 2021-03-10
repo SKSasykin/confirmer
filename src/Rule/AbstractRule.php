@@ -28,16 +28,19 @@ abstract class AbstractRule implements RuleInterface
 
     private function loadFields(Request $request): void
     {
+        $data = $request->getStatus()->{static::class} ?? [];
         foreach ($this->fields() as $field) {
-            $this->{$field} = $request->getStatus()->{$field};
+            $this->{$field} = $data[$field] ?? null;
         }
     }
 
     private function saveFields(Request $request): void
     {
+        $data = [];
         foreach ($this->fields() as $field) {
-            $request->getStatus()->{$field} = $this->{$field};
+            $data[$field] = $this->{$field};
         }
+        $request->getStatus()->{static::class} = $data;
     }
 
     private function fields()
