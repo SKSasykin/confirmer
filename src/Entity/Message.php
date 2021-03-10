@@ -17,12 +17,9 @@ class Message
     protected $body; // = 'text + param = #(param)'
 
     /**
-     * @var string
+     * @var string[]
      */
-    protected $params = [
-        // 'param1' => 'text param 1'
-        // 'param2' => 'text param 2'
-    ];
+    protected $params = [];
 
     public function __construct(string $body, string $head = '')
     {
@@ -68,7 +65,7 @@ class Message
         return $this->build($this->body);
     }
 
-    protected function build(string $content)
+    protected function build(string $content): string
     {
         $params = [];
         foreach ($this->params as $param => $text) {

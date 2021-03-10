@@ -30,6 +30,13 @@ class Status
      */
     protected $dynamicPayload = [];
 
+    /**
+     * @param Code                   $code
+     * @param bool                   $confirmed
+     * @param DateTimeInterface|null $requestTime
+     * @param array                  $dynamicPayload
+     * @psalm-suppress MissingParamType
+     */
     public function __construct(
         Code $code,
         bool $confirmed = false,
@@ -43,17 +50,22 @@ class Status
         $this->dynamicPayload = $dynamicPayload;
     }
 
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->dynamicPayload[$name] ?? null;
     }
 
-    public function __set($name, $value)
+    /**
+     * @param string $name
+     * @param        $value
+     * @psalm-suppress MissingParamType
+     */
+    public function __set(string $name, $value)
     {
         $this->dynamicPayload[$name] = $value;
     }
 
-    public function __isset($name): bool
+    public function __isset(string $name): bool
     {
         return isset($this->dynamicPayload[$name]);
     }

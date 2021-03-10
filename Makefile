@@ -1,7 +1,7 @@
 install:
 	composer install
 psalm:
-	${PWD}/vendor/bin/psalm --no-cache
+	${PWD}/vendor/bin/psalm --no-cache --show-info=true
 psalm-error:
 	${PWD}/vendor/bin/psalm --no-cache --show-info=false
 test-src:

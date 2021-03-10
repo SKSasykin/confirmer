@@ -14,13 +14,13 @@ class Repository implements RepositoryInterface
         $this->db[$request->getRecipient()] = $request;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function findByRecipient(string $recipient): array
-    {
-        $result = $this->db[$recipient] ?? null;
+// --Commented out by Inspection START (10.03.2021, 23:23):
+//    public function findByRecipient(string $recipient): array
+//    {
+//        $result = $this->db[$recipient] ?? null;
+//
+//        return $result ? [$result] : [];
+//    }
+// --Commented out by Inspection STOP (10.03.2021, 23:23)
 
-        return $result ? [$result] : [];
-    }
 }

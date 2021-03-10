@@ -43,7 +43,10 @@ abstract class AbstractRule implements RuleInterface
         $request->getStatus()->{static::class} = $data;
     }
 
-    private function fields()
+    /**
+     * @return string[]
+     */
+    private function fields(): array
     {
         return array_diff(
             array_keys(get_class_vars(static::class)),

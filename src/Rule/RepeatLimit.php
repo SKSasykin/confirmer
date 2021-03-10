@@ -15,6 +15,7 @@ class RepeatLimit extends AbstractRule
     private $repeatTimeout;
 
     /**
+     * @psalm-suppress PropertyNotSetInConstructor
      * @var int
      */
     protected $repeatTime;

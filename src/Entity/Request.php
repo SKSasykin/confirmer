@@ -31,6 +31,14 @@ class Request
      */
     protected $userPayload;
 
+    /**
+     * @param string $recipient
+     * @param string $ip
+     * @param string $token
+     * @param Status $status
+     * @param mixed  $userPayload
+     * @psalm-suppress MissingParamType
+     */
     public function __construct(
         string $recipient,
         string $ip,

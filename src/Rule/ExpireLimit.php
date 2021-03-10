@@ -15,6 +15,7 @@ class ExpireLimit extends AbstractRule
     private $expireTimeout;
 
     /**
+     * @psalm-suppress PropertyNotSetInConstructor
      * @var int
      */
     protected $expire;

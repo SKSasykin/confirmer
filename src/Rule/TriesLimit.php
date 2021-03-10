@@ -15,6 +15,7 @@ class TriesLimit extends AbstractRule
     private $maxTries;
 
     /**
+     * @psalm-suppress PropertyNotSetInConstructor
      * @var int
      */
     protected $tries;
