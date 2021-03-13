@@ -89,9 +89,9 @@ class Confirmer implements ConfirmerInterface
             $rule->onConfirm($this->request);
         }
 
-        $this->repository->save($this->request);
-
         if ($code != $this->request->getStatus()->getCode()) {
+            $this->repository->save($this->request);
+
             throw new InvalidCodeException();
         }
 
