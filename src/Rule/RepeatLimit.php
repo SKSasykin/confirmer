@@ -25,7 +25,7 @@ class RepeatLimit extends AbstractRule
         $this->repeatTimeout = $repeatTimeout;
     }
 
-    public function onRequestCommand(Request $request): void
+    protected function onRequestCommand(Request $request): void
     {
         if(isset($this->repeatTime) && $this->repeatTime > time()) {
             throw new NotExpiredException();
@@ -34,7 +34,7 @@ class RepeatLimit extends AbstractRule
         $this->repeatTime = time() + $this->repeatTimeout;
     }
 
-    public function onConfirmCommand(Request $request): void
+    protected function onConfirmCommand(Request $request): void
     {
     }
 }

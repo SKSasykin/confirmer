@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Confirmer\Entity\Request;
+use Confirmer\Exception\NotFoundException;
 use Confirmer\RepositoryInterface;
 
 class Repository implements RepositoryInterface
@@ -14,13 +15,24 @@ class Repository implements RepositoryInterface
         $this->db[$request->getRecipient()] = $request;
     }
 
-// --Commented out by Inspection START (10.03.2021, 23:23):
-//    public function findByRecipient(string $recipient): array
-//    {
-//        $result = $this->db[$recipient] ?? null;
-//
-//        return $result ? [$result] : [];
-//    }
-// --Commented out by Inspection STOP (10.03.2021, 23:23)
+    public function getByRecipient(string $recipient): Request
+    {
+        $result = $this->db[$recipient] ?? null;
 
+        if(!$result) {
+            throw new NotFoundException();
+        }
+
+        return $result;
+    }
+
+    public function getByToken(string $token): Request
+    {
+        throw new NotFoundException();
+    }
+
+    public function findByIp(string $ip): array
+    {
+        throw new NotFoundException();
+    }
 }

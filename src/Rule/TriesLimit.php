@@ -25,12 +25,12 @@ class TriesLimit extends AbstractRule
         $this->maxTries = $maxTries;
     }
 
-    public function onRequestCommand(Request $request): void
+    protected function onRequestCommand(Request $request): void
     {
         $this->tries = 0;
     }
 
-    public function onConfirmCommand(Request $request): void
+    protected function onConfirmCommand(Request $request): void
     {
         if($this->tries >= $this->maxTries) {
             throw new TriesLimitException();
