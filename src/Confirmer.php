@@ -8,6 +8,7 @@ use Confirmer\CodeGenerator\Code;
 use Confirmer\Entity\Message;
 use Confirmer\Entity\Request;
 use Confirmer\Entity\Status;
+use Confirmer\Exception\EmptyRequestException;
 use Confirmer\Exception\InvalidCodeException;
 use Confirmer\Rule\RuleInterface;
 
@@ -41,8 +42,8 @@ class Confirmer implements ConfirmerInterface
     public function __construct(
         RepositoryInterface $repository,
         CommandInterface $command,
-        Request $request,
-        Message $message = null
+        Message $message = null,
+        Request $request = null
     )
     {
         $this->repository = $repository;
@@ -61,6 +62,10 @@ class Confirmer implements ConfirmerInterface
      */
     public function request(string $code = ''): void
     {
+        if(!$this->request) {
+            throw new EmptyRequestException();
+        }
+
         foreach ($this->rules as $rule) {
             $rule->onRequest($this->request);
         }
@@ -100,5 +105,15 @@ class Confirmer implements ConfirmerInterface
         $this->request->setStatus(new Status($status->getCode(), true, $status->getRequestTime()));
 
         $this->repository->save($this->request);
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    public function setRequest(Request $request): void
+    {
+        $this->request = $request;
     }
 }

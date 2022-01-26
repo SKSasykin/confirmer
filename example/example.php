@@ -19,17 +19,19 @@ require "../vendor/autoload.php";
 require "Repository.php";
 require "Command.php";
 
-$request = new Request('711111', '127.0.0.1', '', new Status(new Code('123')));
 $message = new Message('sms body code: #(code)');
 
 $repository = new Repository();
 $command    = new Command();
 
-$smsConfirmation = new Confirmer($repository, $command, $request, $message);
+$smsConfirmation = new Confirmer($repository, $command, $message);
 $smsConfirmation->addRule(new RepeatLimit(2));
 //$smsConfirmation->addRule(new DayLimit(1));
 $smsConfirmation->addRule(new TriesLimit(1));
 $smsConfirmation->addRule(new ExpireLimit(600));
+
+$request = new Request('711111', '127.0.0.1', '', new Status(new Code('123')));
+$smsConfirmation->setRequest($request);
 
 echo "request1:\n";
 $smsConfirmation->request();

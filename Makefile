@@ -1,5 +1,7 @@
 install:
-	composer install
+	docker run --rm -ti --workdir=/app -v ${PWD}:/app composer:1.9 composer install
+run-example:
+	docker run --rm -ti --workdir=/app/example -v ${PWD}:/app php:7.4-alpine php example.php
 psalm:
 	${PWD}/vendor/bin/psalm --no-cache --show-info=true
 psalm-error:
