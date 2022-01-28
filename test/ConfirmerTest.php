@@ -37,7 +37,7 @@ class ConfirmerTest extends TestCase
 
     public function testConstruct()
     {
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
 
         self::assertEquals($this->repository, $this->privateAccessValue($confirmer, 'repository'));
         self::assertEquals($this->command, $this->privateAccessValue($confirmer, 'command'));
@@ -49,7 +49,7 @@ class ConfirmerTest extends TestCase
     public function testAddRule()
     {
         $rule      = new Rule();
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
 
         self::assertEquals([], $this->privateAccessValue($confirmer, 'rules'));
 
@@ -59,7 +59,7 @@ class ConfirmerTest extends TestCase
 
     public function testRequestNoRules()
     {
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
         /** @var Message $message */
         $message = $this->privateAccessValue($confirmer, 'message');
 
@@ -74,7 +74,7 @@ class ConfirmerTest extends TestCase
 
     public function testRequestWithCode()
     {
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
 
         $confirmer->request('4444');
 
@@ -87,7 +87,7 @@ class ConfirmerTest extends TestCase
     public function testRequestWithRule()
     {
         $rule      = new Rule();
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
         $confirmer->addRule($rule);
 
         $confirmer->request();
@@ -99,7 +99,7 @@ class ConfirmerTest extends TestCase
     {
         $this->expectException(InvalidCodeException::class);
 
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
 
         $confirmer->confirm('4444');
 
@@ -108,7 +108,7 @@ class ConfirmerTest extends TestCase
 
     public function testConfirmNoRules()
     {
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
 
         self::assertFalse($this->request->getStatus()->isConfirmed());
 
@@ -121,7 +121,7 @@ class ConfirmerTest extends TestCase
     public function testConfirmWithRule()
     {
         $rule      = new Rule();
-        $confirmer = new Confirmer($this->repository, $this->command, $this->request);
+        $confirmer = new Confirmer($this->repository, $this->command, null, $this->request);
         $confirmer->addRule($rule);
 
         $confirmer->confirm('1234');
@@ -152,6 +152,22 @@ class Repository implements RepositoryInterface
     {
         return $this->saveResult;
     }
+
+    public function getByRecipient(string $recipient): Request
+    {
+        // TODO: Implement getByRecipient() method.
+    }
+
+    public function getByToken(string $token): Request
+    {
+        // TODO: Implement getByToken() method.
+    }
+
+    public function findByIp(string $ip): array
+    {
+        // TODO: Implement findByIp() method.
+    }
+
 }
 
 class Command implements CommandInterface

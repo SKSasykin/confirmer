@@ -25,7 +25,7 @@ class Confirmer implements ConfirmerInterface
     private $command;
 
     /**
-     * @var Request
+     * @var ?Request
      */
     private $request;
 
@@ -90,6 +90,10 @@ class Confirmer implements ConfirmerInterface
      */
     public function confirm(string $code): void
     {
+        if(!$this->request) {
+            throw new EmptyRequestException();
+        }
+
         foreach ($this->rules as $rule) {
             $rule->onConfirm($this->request);
         }
@@ -107,7 +111,7 @@ class Confirmer implements ConfirmerInterface
         $this->repository->save($this->request);
     }
 
-    public function getRequest(): Request
+    public function getRequest(): ?Request
     {
         return $this->request;
     }
