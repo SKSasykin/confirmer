@@ -106,7 +106,7 @@ class Confirmer implements ConfirmerInterface
 
         $status = $this->request->getStatus();
 
-        $this->request->setStatus(new Status($status->getCode(), true, $status->getRequestTime()));
+        $this->request->setStatus(new Status($status->getCode(), true, $status->getRequestTime(), $status->getDynamicPayload()));
 
         $this->repository->save($this->request);
     }
