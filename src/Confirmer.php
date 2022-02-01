@@ -57,6 +57,11 @@ class Confirmer implements ConfirmerInterface
         $this->rules[] = $rule;
     }
 
+    public function clearRules(): void
+    {
+        $this->rules = [];
+    }
+
     /**
      * @inheritDoc
      */
